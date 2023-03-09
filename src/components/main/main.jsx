@@ -2,6 +2,7 @@ import { useState } from 'react';
 import classnames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 } from 'uuid';
+import { LinearProgress, Alert, AlertTitle } from '@mui/material';
 
 import TicketCard from '../TicketCard/ticketCard';
 import { sortTickets } from '../../store/appSlice';
@@ -11,9 +12,10 @@ import classes from './main.module.scss';
 export default function Main() {
   const dispatch = useDispatch();
   const arrayCountTransfer = useSelector((state) => state.arrayCountTransfer);
-
   const tickets = useSelector((state) => state.tickets);
   const btnFilters = useSelector((state) => state.btnFilters);
+  const checkboxes = useSelector((state) => state.checkboxes);
+  const status = useSelector((state) => state.status);
   const [countOfView, setCountOfView] = useState(5);
 
   const sortByCheckbox = (tickets, arrayCountTransfer) => {
@@ -43,15 +45,27 @@ export default function Main() {
           </li>
         ))}
       </ul>
-      <ul>
-        {ticketsView.map((ticket) => (
-          <TicketCard key={v4()} {...ticket} />
-        ))}
-      </ul>
+      {status && <LinearProgress style={{ marginBottom: '20px' }} />}
+      {checkboxes.filter((checkbox) => checkbox.checked).length ? (
+        <ul>
+          {ticketsView.map((ticket) => (
+            <TicketCard key={v4()} {...ticket} />
+          ))}
+        </ul>
+      ) : (
+        <Alert severity="info">
+          <AlertTitle>
+            <strong>Билеты не найдены</strong>
+          </AlertTitle>
+          Выберете один из вариантов пересадок
+        </Alert>
+      )}
 
-      <button className={classes.main_button_more} onClick={() => setCountOfView(countOfView + 5)}>
-        Показать еще 5 билетов!
-      </button>
+      {!!checkboxes.filter((checkbox) => checkbox.checked).length && (
+        <button className={classes.main_button_more} onClick={() => setCountOfView(countOfView + 5)}>
+          Показать еще 5 билетов!
+        </button>
+      )}
     </div>
   );
 }

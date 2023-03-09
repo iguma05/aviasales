@@ -78,6 +78,8 @@ const appSlice = createSlice({
       state.tickets = [...state.tickets, ...action.payload.tickets];
       if (!action.payload.stop) {
         state.isStop = !state.isStop;
+      } else {
+        state.status = false;
       }
     });
     builder.addCase(getTickets.rejected, (state) => {
