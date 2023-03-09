@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 import classes from './ticketCard.module.scss';
 
 export default function TicketCard({ price, carrier, segments }) {
@@ -30,7 +32,10 @@ export default function TicketCard({ price, carrier, segments }) {
         </thead>
         <tbody>
           <tr>
-            <td>10:45 – 08:00</td>
+            <td>
+              {format(Date.parse(segments[0].date), 'HH:mm')} -{' '}
+              {format(new Date(Date.parse(segments[0].date) + segments[0].duration * 60000), 'HH:mm')}
+            </td>
             <td>{`${Math.floor(segments[0].duration / 60)}ч ${segments[0].duration % 60}м`}</td>
             <td>{segments[0].stops.length ? segments[0].stops.map((item) => item).join(', ') : 'Без пересадок'}</td>
           </tr>
@@ -49,7 +54,10 @@ export default function TicketCard({ price, carrier, segments }) {
         </thead>
         <tbody>
           <tr>
-            <td>11:20 – 00:50</td>
+            <td>
+              {format(Date.parse(segments[1].date), 'HH:mm')} –{' '}
+              {format(new Date(Date.parse(segments[1].date) + segments[1].duration * 60000), 'HH:mm')}
+            </td>
             <td>{`${Math.floor(segments[1].duration / 60)}ч ${segments[1].duration % 60}м`}</td>
             <td>{segments[1].stops.length ? segments[1].stops.map((item) => item).join(', ') : 'Без пересадок'}</td>
           </tr>
