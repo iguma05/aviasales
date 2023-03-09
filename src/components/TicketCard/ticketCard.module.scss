@@ -19,11 +19,6 @@
 		display: flex;
 		align-items: center;
 	}
-	&_companyLogo {
-		background: no-repeat center url('../../assets/S7\ Logo.png');
-		width: 110px;
-		height: 36px;
-	}
 	&_table {
 		width: 100%;
 		max-width: 100%;
@@ -34,14 +29,14 @@
 			font-size: 12px;
 			line-height: 18px;
 			color: #a0b0b9;
-			max-width: 33%;
+			width: 33%;
 		}
 		td {
 			font-size: 14px;
 			line-height: 21px;
 			font-weight: 600;
 			text-align: start;
-			max-width: 33%;
+			width: 33%;
 		}
 	}
 }
