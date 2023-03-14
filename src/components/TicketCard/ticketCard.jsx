@@ -2,7 +2,8 @@ import { format } from 'date-fns';
 
 import classes from './ticketCard.module.scss';
 
-export default function TicketCard({ price, carrier, segments }) {
+export default function TicketCard({ ticket }) {
+  const { price, carrier, segments } = ticket;
   const transfer = (arrayStops) => {
     if (!arrayStops.length) {
       return 'пересадки';

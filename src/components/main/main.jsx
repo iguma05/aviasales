@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import classnames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 } from 'uuid';
 import { LinearProgress, Alert, AlertTitle } from '@mui/material';
 
-import TicketCard from '../TicketCard/ticketCard';
+import TicketCard from '../ticketCard/ticketCard';
 import { sortTickets } from '../../store/appSlice';
 
 import classes from './main.module.scss';
@@ -20,9 +19,9 @@ export default function Main() {
 
   const sortByCheckbox = (tickets, arrayCountTransfer) => {
     return tickets.filter(
-      (ticket) =>
-        arrayCountTransfer.includes(ticket.segments[0].stops.length) &&
-        arrayCountTransfer.includes(ticket.segments[1].stops.length)
+      (item) =>
+        arrayCountTransfer.includes(item.ticket.segments[0].stops.length) &&
+        arrayCountTransfer.includes(item.ticket.segments[1].stops.length)
     );
   };
   const ticketsView = sortByCheckbox(tickets, arrayCountTransfer).slice(0, countOfView);
@@ -49,7 +48,7 @@ export default function Main() {
       {checkboxes.filter((checkbox) => checkbox.checked).length ? (
         <ul>
           {ticketsView.map((ticket) => (
-            <TicketCard key={v4()} {...ticket} />
+            <TicketCard key={ticket.id} {...ticket} />
           ))}
         </ul>
       ) : (

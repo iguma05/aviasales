@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { v4 } from 'uuid';
 
 import service from '../service';
 
@@ -75,7 +76,8 @@ const appSlice = createSlice({
       state.status = true;
     });
     builder.addCase(getTickets.fulfilled, (state, action) => {
-      state.tickets = [...state.tickets, ...action.payload.tickets];
+      const newTickets = action.payload.tickets.map((ticket) => ({ id: v4(), ticket }));
+      state.tickets = [...state.tickets, ...newTickets];
       if (!action.payload.stop) {
         state.isStop = !state.isStop;
       } else {
